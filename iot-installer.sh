@@ -41,7 +41,7 @@ run_mac(){
 
     ## run python driver
     cd $dir
-    pip3 install -r requirements.txt
+    pip3 install -r requirements.txt > /dev/null
     ## pending run python driver TODO
 
     ## run node scripts
@@ -92,7 +92,7 @@ run_linux(){
 
     ## run python driver
     cd ~/iot_inspector/inspector
-    pip3 install -r requirements.txt
+    pip3 install -r requirements.txt > /dev/null
     ## pending run python driver TODO
 
     ## run node scripts
@@ -106,7 +106,10 @@ run_linux(){
     echo "app running on http://localhost:3000"
     google-chrome http://localhost:3000
 }
-
-
-
-run_mac
+if [ "$(uname)" == "Darwin" ]; then
+    # Do something under Mac OS X platform    
+    run_mac    
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+    # Do something under GNU/Linux platform
+    run_linux
+fi
